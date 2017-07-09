@@ -10,7 +10,12 @@
 	var/obj/item/weapon/rig/wearing_rig // This is very not good, but it's much much better than calling get_rig() every update_canmove() call.
 
 /mob/living/carbon/human/New(var/new_loc, var/new_species = null)
-//	world << "new"
+
+	if (istype(get_area(new_loc), /area/prishtina/german))
+		world << "made a guy appear at the german spot"
+		s_tone = Clamp(s_tone, 0, 50)
+		world << "made the guy's skin tone [s_tone]"
+
 	body_build = get_body_build(gender)
 
 	if(!dna)
@@ -41,7 +46,6 @@
 	hud_list[STATUS_HUD_OOC]  = image('icons/mob/hud.dmi', src, "hudhealthy")
 
 
-
 	human_mob_list |= src
 	..()
 
@@ -57,6 +61,7 @@
 		dna.ready_dna(src)
 		dna.real_name = real_name
 		sync_organ_dna()
+
 	make_blood()
 
 
